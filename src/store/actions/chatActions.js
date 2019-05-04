@@ -1,9 +1,9 @@
 import {
-    ON_CHAT_GOT,
+	ON_CHAT_GOT,
 	CHAT_DELETED,
 	SET_READ_MESSAGE,
 	REMOVE_NOT_READ_MESSAGE,
-    ON_PREVIOUS_MESSAGES
+	ON_PREVIOUS_MESSAGES
 } from '../actions/actionsTypes';
 import firebase from 'react-native-firebase';
 import Firebase from 'firebase';

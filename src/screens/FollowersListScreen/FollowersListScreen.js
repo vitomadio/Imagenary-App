@@ -12,25 +12,19 @@ import {
 import { connect } from 'react-redux';
 import Avatar from '../../components/UI/Avatar';
 import {
-  acceptInvitation,
-  startFollowing,
   getUser,
-  removeFollower,
   openComment,
-  deleteChat,
   getMyPosts,
 } from '../../store/actions';
 import withPreventDoubleClick from '../../components/withPreventDoubleClick/withPreventDoubleClick';
 
 const TouchableOpacityEx = withPreventDoubleClick(TouchableOpacity)
 
-
 class FollowersListScreen extends Component {
 
   state = {
     animationOn: false,
     commentOpen: false,
-    recipient: null
   };
 
   constructor(props) {
@@ -200,7 +194,6 @@ class FollowersListScreen extends Component {
             </View>
           </TouchableOpacityEx>
           : null}
-
 
         {actualActivities.length >= 1 &&
           <View>
@@ -453,7 +446,6 @@ const mapStateToProps = state => {
   return {
     userId: state.auth.userId,
     sessionUser: state.users.user,
-    notReadMessages: state.users.notReadMessages,
     requests: state.users.requests,
     follow: state.users.follow,
     followsMe: state.users.followsMe,
@@ -466,13 +458,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAcceptInvitation: (userRequestID, sessionUserId) => dispatch(acceptInvitation(userRequestID, sessionUserId)),
-    onStartFollowing: (userRequest, sessionUser) => dispatch(startFollowing(userRequest, sessionUser)),
-    onRemoveFollorwer: (removeUser, sessionUser) => dispatch(removeFollower(removeUser, sessionUser)),
     onGetUser: (userId) => dispatch(getUser(userId)),
     onOpenComment: (sessionUser) =>
       dispatch(openComment(sessionUser)),
-    onDeleteChat: (sessionUser, recipientKey) => dispatch(deleteChat(sessionUser, recipientKey)),
     onGetMyPosts: (sessionUser) => dispatch(getMyPosts(sessionUser))
   };
 };

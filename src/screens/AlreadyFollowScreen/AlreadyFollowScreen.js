@@ -5,7 +5,6 @@ import {
   Image,
   Text,
   FlatList,
-  Alert,
   Platform,
   TouchableOpacity,
 } from 'react-native';
@@ -17,7 +16,6 @@ import {
   openComment,
   rejectRequest,
   removeInvitation,
-  getChat,
   getRequestsInfo,
   getUserPromise
 } from '../../store/actions';
@@ -33,12 +31,7 @@ const db = firebase.database();
 class PeopleIFollow extends Component {
 
   state = {
-    searchfield: "",
-    animationOn: false,
-    modalVisible: false,
-    recipient: null,
     myFollowersOpen: false,
-    updated: "",
     users: []
   };
 
@@ -269,10 +262,6 @@ class PeopleIFollow extends Component {
       return a > b ? -1 : a < b ? 1 : 0;
     });
 
-    const followed = this.props.follow.filter(item => {
-      return item.username.toLowerCase().includes(this.state.searchfield.toLowerCase())
-    });
-
     return (
 
       <View style={styles.viewsContainer}>
@@ -467,18 +456,6 @@ const styles = StyleSheet.create({
     height: 36,
     width: 36,
     marginRight: 5,
-  },
-  requestsQty: {
-    height: 15,
-    width: 15,
-    left: 50,
-    top: 10,
-    position: 'absolute',
-    backgroundColor: '#DA2E6B',
-    borderRadius: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 999
   }
 });
 
@@ -488,8 +465,6 @@ const mapStateToProps = state => {
     userId: state.auth.userId,
     sessionUser: state.users.user,
     requests: state.users.requests,
-    invitations: state.users.invitations,
-    notReadMessages: state.users.notReadMessages,
     follow: state.users.follow,
     followsMe: state.users.followsMe,
     followsActivities: state.users.followsActivities,
@@ -509,7 +484,6 @@ const mapDispatchToProps = dispatch => {
       dispatch(openComment(sessionUserId, commentAuthorId, comments)),
     onRejectRequest: (userRequest, sessionUser) => dispatch(rejectRequest(userRequest, sessionUser)),
     onRemoveInvitation: (userInvited, sessionUser) => dispatch(removeInvitation(userInvited, sessionUser)),
-    getChat: (sessionUser, recipient) => dispatch(getChat(sessionUser, recipient)),
     onGetRequestsInfo: (sessionUser) => dispatch(getRequestsInfo(sessionUser))
   };
 };
